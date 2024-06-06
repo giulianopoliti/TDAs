@@ -428,29 +428,6 @@ public class Example {
     }
 
     // SIMULACRO DE PARCIAL 2
-    public static ISet generarIdeal2 (int a, int b, int n, int m) {
-        ISet ideal = new DynamicSet();
-        if (a > n && a < m) {
-            ideal.add(a);
-        } if (b > n && b < m){
-            ideal.add(b);
-        }
-        if (a+b > n && a+b < m){
-            ideal.add(a+b);
-        } if (a*b > n && a*b < m) {
-            ideal.add(a*b);
-        } if (a*b + a > n && a*b + a < m) {
-            ideal.add(a*b+a);
-        }if (a*b+b > n && a*b+b < m){
-            ideal.add(a*b+b);
-        } if (a+b *a > n && a+b * a < m){
-            ideal.add(a*b+a);
-        }if (a+b *b > n && a+b *b < m){
-            ideal.add(a+b*b);
-        }
-            return ideal;
-    }
-
     public static boolean[] toBinary(int n, int size) {
         boolean[] array = new boolean[size];
         int i = 0;
