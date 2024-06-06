@@ -498,4 +498,48 @@ public class Example {
         }return result;
 }
 */
+    public static int encontrarLargoQueueSobre2 (IQueue queue){
+        IQueue copy = copy(queue);
+        int count = 0;
+        while (!copy.isEmpty()){
+            copy.remove();
+            count++;
+        }
+        return count;
+    }
+    public static IQueue encontrarSubQueueMasLarga (IQueue queue, int size){
+        if (queue.isEmpty()){
+            throw new RuntimeException("Cola vacia.");
+        }
+        if (size == 0){
+            throw new RuntimeException("No hay subcola que se repíta.");
+        }
+        IQueue copy = copy(queue);
+        IQueue subQueue = new DynamicQueue();
+        //int size = encontrarLargoQueue(queue) / 2;
+        for (int i = size; i >= 0; i--){
+            if (!copy.isEmpty()){
+                subQueue.add(copy.getFirst());
+                copy.remove();
+            }
+
+        }
+        IQueue copySubQueue = copy(subQueue);
+        while (!copySubQueue.isEmpty()){
+            if (!copy.isEmpty()){
+                if (copySubQueue.getFirst() != copy.getFirst()){
+                    return encontrarSubQueueMasLarga(queue, size-1);
+                }
+                copySubQueue.remove();
+                copy.remove();
+            }
+
+        }
+        while (!copySubQueue.isEmpty()){
+            if (!copy.isEmpty() && copy.getFirst() != copySubQueue.getFirst()){
+                return encontrarSubQueueMasLarga(queue, size-1);
+            }
+        }
+        return subQueue;
+    }
 }

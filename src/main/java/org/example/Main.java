@@ -3,16 +3,37 @@ package org.example;
 import org.example.adt.*;
 import org.example.clazz.Example;
 
+import java.util.Queue;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        IQueue queue = new DynamicQueue();
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        int size = Example.encontrarLargoQueueSobre2(queue);
+        System.out.println(size);
+
+        IQueue subQueueMasLarga = Example.encontrarSubQueueMasLarga(queue, size);
+        while (!subQueueMasLarga.isEmpty()){
+            System.out.println(subQueueMasLarga.getFirst());
+            subQueueMasLarga.remove();
+        }
+
+
+
+        /*
         ISet set = Example.generarIdeal(4,8,1,2);
         while (!set.isEmpty()){
             int value = set.choose();
             System.out.println(value);
             set.remove(value);
-        }
+        }*/
 
 
 
