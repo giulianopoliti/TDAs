@@ -440,6 +440,36 @@ public class Example {
         array[i] = n == 1;
         return array;
     }
+
+    public static boolean verificarRepresentacionDeStack (IQueue queue){
+        IQueue copy = copy(queue);
+        ISet set = new DynamicSet();
+        while (!copy.isEmpty()){
+            set.add(copy.getFirst());
+            copy.remove();
+        }
+        while (!set.isEmpty()){
+            int value = set.choose();
+            if (apareceMasDeTresVeces(queue,value)){
+                return false;
+            }
+            set.remove(value);
+        }
+        return true;
+    }
+    public static boolean apareceMasDeTresVeces (IQueue queue, int number){
+        IQueue copy = copy(queue);
+        int count = 0;
+        while (!copy.isEmpty()){
+            if (copy.getFirst() == number){
+                if (++count == 3){
+                    return true;
+                }
+                copy.remove();
+            }
+        }
+        return false;
+    }
     /*public static MultipleDictionary intersection (MultipleDictionary dictionary, MultipleDictionary dictionary2){
         ISet set = dictionary.getKeys();
         ISet set2 = dictionary2.getKeys();
