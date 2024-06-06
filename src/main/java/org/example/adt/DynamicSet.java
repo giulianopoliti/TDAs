@@ -35,6 +35,7 @@ public class DynamicSet implements ISet {
 
         if(this.first.getValue() == a) {
             this.first = this.first.getNext();
+            this.count--;
             return;
         }
 

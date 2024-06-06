@@ -1,12 +1,22 @@
 package org.example;
 
 import org.example.adt.*;
+import org.example.clazz.Example;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        DynamicStack stack = new DynamicStack();
+        ISet set = Example.generarIdeal(4,8,1,2);
+        while (!set.isEmpty()){
+            int value = set.choose();
+            System.out.println(value);
+            set.remove(value);
+        }
+
+
+
+        /*DynamicStack stack = new DynamicStack();
         stack.addSinPotencia(1);
         stack.addSinPotencia(4);
         stack.addSinPotencia(2);
@@ -19,7 +29,7 @@ public class Main {
             System.out.println(stack.getTop());
             stack.remove();
         }
-
+*/
 
         /* arbol completo altura 3*/
         /*
