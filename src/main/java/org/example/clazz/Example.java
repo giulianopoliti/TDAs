@@ -379,55 +379,6 @@ public class Example {
         return setOfSet;
     }
 
-    public static ISet generarIdeal (int a, int b, int n, int m) {
-        ISet ideal = new DynamicSet();
-        if (n > b) {
-            if (m > b) {
-                return ideal;
-            }
-            for (int i = 1; i * m < b; i++){
-                if (i*n>a){
-                    ideal.add(i*m);
-                }
-            }
-            return ideal;
-        }
-        if (m > b){
-            for (int i = 1; i * n < b; i++){
-                if (i*n > a){
-                    ideal.add(i*n);
-                }
-                return ideal;
-            }
-        }
-        for (int i = 1; i * n < b; i++){
-            if (i*n > a) {
-                ideal.add(i * n);
-            }
-        }
-        for (int i = 1; i * m < b; i++){
-            if (i*n>a){
-                ideal.add(i*m);
-            }
-        }
-
-        ISet aux1 = copy(ideal);
-        while (!aux1.isEmpty()){
-            int value = aux1.choose();
-            aux1.remove(value);
-            ISet aux2 = copy(aux1);
-            while (!aux2.isEmpty()){
-                int value2 = aux2.choose();
-                if (value + value2 > a && value + value2 < b){
-                    ideal.add(value+value2);
-                }
-                aux2.remove(value2);
-            }
-        }
-        return ideal;
-    }
-
-    // SIMULACRO DE PARCIAL 2
     public static boolean[] toBinary(int n, int size) {
         boolean[] array = new boolean[size];
         int i = 0;
@@ -441,6 +392,85 @@ public class Example {
         return array;
     }
 
+
+    /*
+    -----------CONSIGNAS DEL SIMULACRO DE PARCIAL 2 --------------
+    1) Modificar la implementacion dinamica de Stack para que no se puedan agregar valores sean potencia
+    de un elemento que ya existe dentro de la estructura.
+    RTA:
+    Esto lo podemos ver en la clase DynamicStackSinPotencias.
+
+    2) Un ideal I en Z tiene un conjunto que llamaremos tambien I, que cumple dos condiciones:
+        1-   Si a, b ∈ I, entonces a + b ∈ I.
+        2-   Si a ∈ Z, b ∈ I, entonces a b ∈ I
+
+        Claramente este conjunto podr´ıa ser infinito, y entonces cualquier conjunto
+        que tengamos programado no podr´a representar el conjunto de un Ideal.
+        Pero, podemos tomar un intervalo (a, b) tal que exista un I que lo contenga.
+
+        Generear un ideal a partir de dos n´umeros n y m y cubrir todo el intervalo
+        (a, b), donde n es el digito m´as a la izquierda de su legajo (distinto de cero)
+        y an´alogamente m es el m´as a la derecha.
+
+
+
+        Hacer un metodo estatico que reciba una cola de numeros enteros y devuelva true si la secuencia puede representar operaciones de add y remove
+        de una stack si consideramos que no puede tener elementos repetidos.
+
+     */
+
+
+    // 2 A) GENERAR CONJUNTO IDEAL.
+
+    public static ISet generarIdeal (int a, int b, int n, int m) {
+        ISet ideal = new DynamicSet();
+        if (n > b) {
+            if (m > b) {
+                return ideal;
+            }
+            for (int i = 1; i * m < b; i++) {
+                if (i * n > a) {
+                    ideal.add(i * m);
+                }
+            }
+            return ideal;
+        }
+        if (m > b) {
+            for (int i = 1; i * n < b; i++) {
+                if (i * n > a) {
+                    ideal.add(i * n);
+                }
+                return ideal;
+            }
+        }
+        for (int i = 1; i * n < b; i++) {
+            if (i * n > a) {
+                ideal.add(i * n);
+            }
+        }
+        for (int i = 1; i * m < b; i++) {
+            if (i * n > a) {
+                ideal.add(i * m);
+            }
+        }
+
+        ISet aux1 = copy(ideal);
+        while (!aux1.isEmpty()) {
+            int value = aux1.choose();
+            aux1.remove(value);
+            ISet aux2 = copy(aux1);
+            while (!aux2.isEmpty()) {
+                int value2 = aux2.choose();
+                if (value + value2 > a && value + value2 < b) {
+                    ideal.add(value + value2);
+                }
+                aux2.remove(value2);
+            }
+        }
+        return ideal;
+    }
+
+    // 2 B) REPRESENTACION DE STACK SI TIENE OPERACIONES DE ADD Y REMOVE.
     public static boolean verificarRepresentacionDeStack (IQueue queue){
         IQueue copy = copy(queue);
         ISet set = new DynamicSet();
@@ -470,34 +500,16 @@ public class Example {
         }
         return false;
     }
-    /*public static MultipleDictionary intersection (MultipleDictionary dictionary, MultipleDictionary dictionary2){
-        ISet set = dictionary.getKeys();
-        ISet set2 = dictionary2.getKeys();
-        ISet intersectionSet = intersection(set,set2);
-        while (!intersectionSet.isEmpty()){
-            int key = intersectionSet.choose();
-            List<Integer> list = dictionary.get(key);
-            List<Integer> list2 = dictionary2.get(key);
-            ISet setAux = new DynamicSet();
-            for (int i = 0; i< list.size(); i++){
-                setAux.add(list.get(i));
-            }
-            ISet setAux2 = new DynamicSet();
-            for (int i = 0; i < list2.size(); i++){
-                setAux2.add(list2.get(i));
-            }
-            ISet intersectionValues = intersection(setAux, setAux2);
-            MultipleDictionary result = new DynamicMultipleDictionary();
-            if (!intersectionValues.isEmpty()){
-                while (!intersectionValues.isEmpty()){
-                    int element = intersectionValues.choose();
-                    result.add(key, element);
-                    intersectionValues.remove(element);
-                }
-            } intersectionSet.remove(key);
-        }return result;
-}
-*/
+
+
+    /*
+
+    --------------CONSIGNA---------------
+    Dada una Queue de numeros enteros, calcular la Queue que representa la subcola de elementos
+    mas larga tal que esa subcola aparece al menos dos veces en la Queue.
+
+    Para esto sacamos la longitud /2 y luego se le pasa como parametro a encontrarSubQueueMasLarga.
+     */
     public static int encontrarLargoQueueSobre2 (IQueue queue){
         IQueue copy = copy(queue);
         int count = 0;
@@ -539,5 +551,24 @@ public class Example {
             }
         }
         return subQueue;
+    }
+
+    /* -----CONSIGNA----
+
+    Dada una Queue de índices y los elementos de una Stack (el primero de la Queue es el indice
+    del tope de la Stack), ordene la Stack en base a sus indices.
+
+    Para esto creamos la clase StackWithPriority.
+    En el main se le pasa como parametro una stack y una queue al metodo.
+    En caso de ser de distinta longitud, toma la longitud mas corta para evitar nullpointers.
+     */
+    public static IStackWithPriority ordenarStackWithPriorityEnBaseAQueue (IStack stack, IQueue queue){
+        IStackWithPriority stackWithPriority = new DynamicStackWithPriority();
+        while (!stack.isEmpty() && !queue.isEmpty()){
+            stackWithPriority.add(stack.getTop(),queue.getFirst());
+            stack.remove();
+            queue.remove();
+        }
+        return stackWithPriority;
     }
 }

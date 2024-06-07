@@ -9,6 +9,23 @@ import java.util.Queue;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        IStack stack = new DynamicStack();
+        IQueue queue = new DynamicQueue();
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        queue.add(1);
+        stack.add(1);
+        stack.add(2);
+        stack.add(3);
+        IStackWithPriority stackWithPriority = Example.ordenarStackWithPriorityEnBaseAQueue(stack,queue);
+        while (!stackWithPriority.isEmpty()){
+            System.out.println("Value:" + stackWithPriority.getTop() + "--> Priority:" + stackWithPriority.getPriority());
+            System.out.println();
+            stackWithPriority.remove();
+        }
+
+        /*
         IQueue queue = new DynamicQueue();
         queue.add(1);
         queue.add(2);
@@ -23,7 +40,7 @@ public class Main {
             subQueueMasLarga.remove();
         }
 
-
+*/
 
         /*
         ISet set = Example.generarIdeal(4,8,1,2);
