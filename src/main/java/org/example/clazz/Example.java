@@ -505,13 +505,13 @@ public class Example {
             copy.remove();
             count++;
         }
-        return count;
+        return count/2;
     }
     public static IQueue encontrarSubQueueMasLarga (IQueue queue, int size){
         if (queue.isEmpty()){
             throw new RuntimeException("Cola vacia.");
         }
-        if (size == 0){
+        if (size < 0){
             throw new RuntimeException("No hay subcola que se repíta.");
         }
         IQueue copy = copy(queue);
@@ -522,21 +522,19 @@ public class Example {
                 subQueue.add(copy.getFirst());
                 copy.remove();
             }
-
         }
         IQueue copySubQueue = copy(subQueue);
         while (!copySubQueue.isEmpty()){
             if (!copy.isEmpty()){
                 if (copySubQueue.getFirst() != copy.getFirst()){
-                    return encontrarSubQueueMasLarga(queue, size-1);
+                    copy.remove();
                 }
-                copySubQueue.remove();
-                copy.remove();
+                else {
+                    copy.remove();
+                    copySubQueue.remove();
+                }
             }
-
-        }
-        while (!copySubQueue.isEmpty()){
-            if (!copy.isEmpty() && copy.getFirst() != copySubQueue.getFirst()){
+            else {
                 return encontrarSubQueueMasLarga(queue, size-1);
             }
         }

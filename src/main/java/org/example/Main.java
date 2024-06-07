@@ -14,10 +14,8 @@ public class Main {
         queue.add(2);
         queue.add(3);
         queue.add(1);
-        queue.add(2);
-        queue.add(3);
         int size = Example.encontrarLargoQueueSobre2(queue);
-        System.out.println(size);
+        //System.out.println(size);
 
         IQueue subQueueMasLarga = Example.encontrarSubQueueMasLarga(queue, size);
         while (!subQueueMasLarga.isEmpty()){
