@@ -53,9 +53,9 @@ public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWit
                 if (firstValueNode != null) {
                     currentKeyNode.setValues(firstValueNode.getNext());
                     this.count--;
-                    if (this.first.getValues() == null){
-                        this.first = this.first.getNext();
-                    }
+                }
+                if (firstValueNode == null){
+                    currentKeyNode = currentKeyNode.getNext();
                 }
                 return;  // Salir después de encontrar y eliminar el valor
             }
