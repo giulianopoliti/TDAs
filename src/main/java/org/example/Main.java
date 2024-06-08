@@ -17,7 +17,7 @@ public class Main {
         multipleDictionary.add(2,6);
         multipleDictionary.add(3,8);
         Example.printDynamicDictionaryWithStack(multipleDictionary);
-        multipleDictionary.removeKey(2);
+        multipleDictionary.remove(2);
         Example.printDynamicDictionaryWithStack(multipleDictionary);
 
 

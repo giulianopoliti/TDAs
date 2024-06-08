@@ -21,7 +21,7 @@ public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWit
         Node newNode = new Node(v,currentAux);
         this.first.setValues(newNode);
     }
-
+/*
     public void removeKey (int key){
         if (this.first == null){
             return;
@@ -37,57 +37,33 @@ public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWit
             current = current.getNext();
         }
     }
-    public void remove(int key, int value) {
+    */
+
+    //Borra el primer valor de la pila.
+    @Override
+    public void remove(int key) {
         if(this.first == null) {
             return;
         }
-        if(this.first.getNext() == null) {
-            if(this.first.getKey() == key) {
-                if(this.first.getValues().getNext() == null) {
-                    if(this.first.getValues().getValue() == value) {
-                        this.first = null;
-                        this.count--;
-                        return;
-                    }
-                }
-                this.delete(this.first.getValues(), value);
-                return;
-            }
-            return;
-        }
-
-        if(this.first.getKey() == key) {
-            if(this.first.getValues().getNext() == null) {
-                if(this.first.getValues().getValue() == value) {
-                    this.first = this.first.getNext();
+        KeyNode currentKeyNode = this.first;
+        // Recorre la lista de KeyNode para encontrar el nodo con la clave
+        while (currentKeyNode != null) {
+            if (currentKeyNode.getKey() == key) {
+                Node firstValueNode = currentKeyNode.getValues();
+                if (firstValueNode != null) {
+                    currentKeyNode.setValues(firstValueNode.getNext());
                     this.count--;
-                }
-                return;
-            }
-            this.delete(this.first.getValues(), value);
-            return;
-        }
-
-        KeyNode backup = this.first;
-        KeyNode current = this.first.getNext();
-        while(current != null && current.getKey() != key) {
-            backup = current;
-            current = current.getNext();
-        }
-
-        if(current != null) {
-            if(current.getKey() == key) {
-                if(current.getValues().getNext() == null) {
-                    if(current.getValues().getValue() == value) {
-                        backup.setNext(current.getNext());
-                        this.count--;
+                    if (this.first.getValues() == null){
+                        this.first = this.first.getNext();
                     }
-                    return;
                 }
-                this.delete(this.first.getValues(), value);
+                return;  // Salir después de encontrar y eliminar el valor
             }
+            currentKeyNode = currentKeyNode.getNext();
         }
+        throw new RuntimeException("No se encontro la llave.");
     }
+
 
     @Override
     public ISet getKeys() {
