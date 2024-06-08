@@ -2,10 +2,10 @@ package org.example.adt;
 
 import java.util.List;
 
-public interface MultipleDictionary {
-
+public interface MultipleDictionaryWithStack {
     void add(int k, int v);
     void remove(int k, int v);
     ISet getKeys();
-    List<Integer> get(int k);
+    IStack get(int k);
+    void removeKey(int k);
 }

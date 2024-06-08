@@ -9,6 +9,22 @@ import java.util.Queue;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        MultipleDictionaryWithStack multipleDictionary = new DynamicMultipleDictionaryWithStack();
+        multipleDictionary.add(1,2);
+        multipleDictionary.add(1,3);
+        multipleDictionary.add(1,3);
+        multipleDictionary.add(1,4);
+        multipleDictionary.add(2,6);
+        multipleDictionary.add(3,8);
+        Example.printDynamicDictionaryWithStack(multipleDictionary);
+        multipleDictionary.removeKey(2);
+        Example.printDynamicDictionaryWithStack(multipleDictionary);
+
+
+
+
+
+        /*
         IStack stack = new DynamicStack();
         IQueue queue = new DynamicQueue();
         queue.add(1);
@@ -23,7 +39,7 @@ public class Main {
             System.out.println("Value:" + stackWithPriority.getTop() + "--> Priority:" + stackWithPriority.getPriority());
             System.out.println();
             stackWithPriority.remove();
-        }
+        }*/
 
         /*
         IQueue queue = new DynamicQueue();

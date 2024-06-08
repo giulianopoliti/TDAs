@@ -1,34 +1,42 @@
 package org.example.adt;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DynamicMultipleDictionary implements MultipleDictionary {
-
+public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWithStack{
     private KeyNode first;
     private int count;
-
     @Override
-    public void add(int key, int value) {
+    public void add(int k, int v) {
         KeyNode current = this.first;
-        while(current != null && current.getKey() != key) {
+        while(current != null && current.getKey() != k) {
             current = current.getNext();
         }
         if(current == null) {
-            this.first = new KeyNode(key, this.first, new Node(value, null));
+            this.first = new KeyNode(k, this.first, new Node(v, null));
             this.count++;
             return;
         }
-
         Node currentAux = current.getValues();
-        while(currentAux.getNext() != null) {
-            currentAux = currentAux.getNext();
-        }
-        currentAux.setNext(new Node(value, null));
+        Node newNode = new Node(v,currentAux);
+        this.first.setValues(newNode);
     }
 
-    @Override
+    public void removeKey (int key){
+        if (this.first == null){
+            return;
+        }
+        KeyNode backup = this.first;
+        KeyNode current = this.first.getNext();
+        while (!getKeys().isEmpty()){
+            if (backup.getKey() == key){
+                backup.setNext(current.getNext());
+                return;
+            }
+            backup = current;
+            current = current.getNext();
+        }
+    }
     public void remove(int key, int value) {
         if(this.first == null) {
             return;
@@ -100,17 +108,17 @@ public class DynamicMultipleDictionary implements MultipleDictionary {
     }
 
     @Override
-    public List<Integer> get(int k) {
+    public IStack get(int k) {
         KeyNode current = this.first;
         while(current != null) {
             if(current.getKey() == k) {
-                List<Integer> list = new LinkedList<>();
+                IStack stack = new DynamicStack();
                 Node node = current.getValues();
                 while(node != null) {
-                    list.add(node.getValue());
+                    stack.add(node.getValue());
                     node = node.getNext();
                 }
-                return list;
+                return stack;
             }
             current = current.getNext();
         }
@@ -132,5 +140,7 @@ public class DynamicMultipleDictionary implements MultipleDictionary {
             backup.setNext(current.getNext());
         }
     }
+
+
 
 }

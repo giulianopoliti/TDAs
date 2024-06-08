@@ -3,6 +3,7 @@ package org.example.clazz;
 import org.example.adt.*;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Example {
 
@@ -570,5 +571,41 @@ public class Example {
             queue.remove();
         }
         return stackWithPriority;
+    }
+
+
+    public static void printDynamicDictionary (MultipleDictionary multipleDictionary) {
+        ISet keys = multipleDictionary.getKeys();
+        ISet copykeys = copy(keys);
+        while (!copykeys.isEmpty()){
+            int key = copykeys.choose();
+            System.out.print("key -->" + key);
+            System.out.print("VALORES: ");
+            List <Integer> values = multipleDictionary.get(key);
+            for (Integer value : values) {
+                System.out.print(value);
+                System.out.println(",");
+            }
+            System.out.println();
+            copykeys.remove(key);
+        }
+    }
+
+    public static void printDynamicDictionaryWithStack (MultipleDictionaryWithStack multipleDictionary) {
+        ISet keys = multipleDictionary.getKeys();
+        ISet copykeys = copy(keys);
+        while (!copykeys.isEmpty()){
+            int key = copykeys.choose();
+            System.out.print("key -->" + key);
+            System.out.print("VALORES: ");
+            IStack stack = multipleDictionary.get(key);
+            while (!stack.isEmpty()) {
+                System.out.print(stack.getTop());
+                System.out.println(",");
+                stack.remove();
+            }
+            System.out.println();
+            copykeys.remove(key);
+        }
     }
 }

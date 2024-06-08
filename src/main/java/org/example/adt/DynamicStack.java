@@ -6,8 +6,6 @@ public class DynamicStack implements IStack {
 
     private Node first;
 
-
-
     @Override
     public void add(int a) {
         Node node = new Node(a, this.first);
