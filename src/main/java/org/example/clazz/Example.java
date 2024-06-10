@@ -502,6 +502,22 @@ public class Example {
         return false;
     }
 
+    /*
+
+
+     */
+    public static BinaryTree findFibonacciTree (BinaryTree binaryTree){
+            if (binaryTree.getRootValue() == 1){
+                return binaryTree;
+            } else {
+                int hijo = binaryTree.getRootValue() /2;
+                binaryTree.addLeft(hijo);
+                binaryTree.addRight(binaryTree.getRootValue() - hijo);
+                findFibonacciTree(binaryTree.getLeft());
+                findFibonacciTree(binaryTree.getRight());
+            }
+        return binaryTree;
+    }
 
     /*
 
@@ -511,14 +527,59 @@ public class Example {
 
     Para esto sacamos la longitud /2 y luego se le pasa como parametro a encontrarSubQueueMasLarga.
      */
-    public static int encontrarLargoQueueSobre2 (IQueue queue){
+    public static int encontrarLargoQueue (IQueue queue){
         IQueue copy = copy(queue);
         int count = 0;
         while (!copy.isEmpty()){
             copy.remove();
             count++;
         }
-        return count/2;
+        return count;
+    }
+    public static IQueue encontrarSQMasLarga (IQueue queue){
+        IQueue longestCandidate = new DynamicQueue();
+        IQueue copy = copy(queue);
+        for (int i = size(queue); i > 0; i--){
+            IQueue candidate = encontrarSubQueue(copy,i);
+            if (size(candidate) > size(longestCandidate)){
+                longestCandidate = candidate;
+            }
+            copy.remove();
+        }
+        return longestCandidate;
+    }
+
+    public static IQueue encontrarSubQueue (IQueue queue, int size){
+        if (queue.isEmpty()){
+            throw new RuntimeException("Cola vacia.");
+        }
+        IQueue subQueue = new DynamicQueue();
+        IQueue copy = copy(queue);
+        for (int i = 0; i < size && !copy.isEmpty(); i++){
+            subQueue.add(copy.getFirst());
+            copy.remove();
+        }
+
+        IQueue candidate = new DynamicQueue();
+        while (!copy.isEmpty()){
+            IQueue tempQueue = copy(copy);
+            IQueue tempSQ = copy(subQueue);
+            boolean match = true;
+            while (!tempSQ.isEmpty() && !tempQueue.isEmpty()){
+                if (tempQueue.getFirst() == tempSQ.getFirst()){
+                    match = false;
+                    break;
+                }
+                tempQueue.remove();
+                tempQueue.remove();
+                }
+            if (match && tempSQ.isEmpty()){
+                candidate = subQueue;
+                break;
+            }
+            copy.remove();
+        }
+        return candidate;
     }
     public static IQueue encontrarSubQueueMasLarga (IQueue queue, int size){
         if (queue.isEmpty()){

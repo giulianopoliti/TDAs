@@ -2,6 +2,7 @@ package org.example.adt;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWithStack{
     private KeyNode first;
@@ -40,28 +41,49 @@ public class DynamicMultipleDictionaryWithStack implements MultipleDictionaryWit
     */
 
     //Borra el primer valor de la pila.
+
+
+
+    public void remove2 (int key){
+        if (this.first == null) {
+            return;
+        }
+        KeyNode current = this.first;
+        KeyNode next = current.getNext();
+        while (current != null) {
+            if (current.getKey() == key){
+                if (Objects.isNull(current.getValues())){
+
+                }
+                current.setValues(current.getValues().getNext());
+            }
+            else {
+
+            }
+        }
+    }
     @Override
     public void remove(int key) {
         if(this.first == null) {
             return;
         }
-        KeyNode currentKeyNode = this.first;
+/*
+        KeyNode backup = this.first;
+        if (backup.getKey() == key){
+        }
+        KeyNode current = backup.getNext();
         // Recorre la lista de KeyNode para encontrar el nodo con la clave
-        while (currentKeyNode != null) {
+        while (current != null) {
             if (currentKeyNode.getKey() == key) {
                 Node firstValueNode = currentKeyNode.getValues();
-                if (firstValueNode != null) {
-                    currentKeyNode.setValues(firstValueNode.getNext());
-                    this.count--;
-                }
-                if (firstValueNode == null){
-                    currentKeyNode = currentKeyNode.getNext();
+                firstValueNode = firstValueNode.getNext();
+                    if (firstValueNode == null) {
                 }
                 return;  // Salir después de encontrar y eliminar el valor
             }
             currentKeyNode = currentKeyNode.getNext();
         }
-        throw new RuntimeException("No se encontro la llave.");
+        throw new RuntimeException("No se encontro la llave.");*/
     }
 
 

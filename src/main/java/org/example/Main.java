@@ -9,6 +9,17 @@ import java.util.Queue;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
+        BinaryTree binaryTree = new DynamicBinaryTree(5);
+        binaryTree = Example.findFibonacciTree(binaryTree);
+        print(binaryTree);
+
+
+
+
+
+
+        /*
         MultipleDictionaryWithStack multipleDictionary = new DynamicMultipleDictionaryWithStack();
         multipleDictionary.add(1,2);
         multipleDictionary.add(1,3);
@@ -19,7 +30,7 @@ public class Main {
         Example.printDynamicDictionaryWithStack(multipleDictionary);
         multipleDictionary.remove(2);
         Example.printDynamicDictionaryWithStack(multipleDictionary);
-
+*/
 
 
 
@@ -41,19 +52,20 @@ public class Main {
             stackWithPriority.remove();
         }*/
 
-        /*
+    /*
         IQueue queue = new DynamicQueue();
-        queue.add(1);
+        queue.add(2);
         queue.add(2);
         queue.add(3);
         queue.add(1);
-        int size = Example.encontrarLargoQueueSobre2(queue);
-        //System.out.println(size);
-
-        IQueue subQueueMasLarga = Example.encontrarSubQueueMasLarga(queue, size);
-        while (!subQueueMasLarga.isEmpty()){
-            System.out.println(subQueueMasLarga.getFirst());
-            subQueueMasLarga.remove();
+        queue.add(2);
+        queue.add(1);
+        queue.add(2);
+        IQueue candidate = new DynamicQueue();
+        candidate = Example.encontrarSQMasLarga(queue);
+        while (!candidate.isEmpty()){
+            System.out.println(candidate.getFirst());
+            candidate.remove();
         }
 
 */
