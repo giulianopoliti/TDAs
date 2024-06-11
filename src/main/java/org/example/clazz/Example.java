@@ -2,6 +2,7 @@ package org.example.clazz;
 
 import org.example.adt.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -502,19 +503,108 @@ public class Example {
         return false;
     }
 
+    public static BinaryTree createFibonacciTree (int num) {
+        List <Integer> fibonaccis = generateFibonacciList(num);
+        BinaryTree binaryTree = new DynamicBinaryTree(num);
+        binaryTree = generateFibonacciTree(fibonaccis,binaryTree);
+        return binaryTree;
+    }
+
+    public static BinaryTree generateFibonacciTree(List<Integer> fibonaccis, BinaryTree binaryTree) {
+        if (fibonaccis.isEmpty()) {
+            return binaryTree;
+        }
+
+        // Obtener el último elemento de la lista de Fibonacci
+        int lastFibonacci = fibonaccis.get(fibonaccis.size() - 1);
+
+        // Agregar el último elemento como el nodo derecho del árbol actual
+        binaryTree.addRight(lastFibonacci);
+
+        // Crear una copia de la lista para procesar los subárboles
+        List<Integer> copy = new ArrayList<>(fibonaccis);
+        copy.remove(copy.size() - 1); // Remover el último elemento de la copia
+
+        // Llamar recursivamente para construir el subárbol derecho
+        generateFibonacciTree(copy, binaryTree.getRight());
+
+        // Si aún hay elementos en la lista, agregar el último elemento como el nodo izquierdo del árbol actual
+        if (!copy.isEmpty()) {
+            binaryTree.addLeft(copy.get(copy.size() - 1));
+            copy.remove(copy.size() - 1); // Remover el último elemento de la copia
+
+            // Llamar recursivamente para construir el subárbol izquierdo
+            generateFibonacciTree(copy, binaryTree.getLeft());
+        }
+
+        return binaryTree;
+    }
+    public static BinaryTree generateFibonacciTr (List<Integer> fibonaccis, BinaryTree binaryTree){
+        if (fibonaccis.isEmpty()){
+            return binaryTree;
+        }
+        List<Integer> copy = new ArrayList<>(fibonaccis);
+        if (!copy.isEmpty()) {
+            binaryTree.addRight(fibonaccis.getLast());
+            copy.remove(copy.size()-1);
+            binaryTree.addLeft(fibonaccis.getLast());
+            generateFibonacciTr(copy,binaryTree.getRight());
+        }
+        List<Integer> copy2 = new ArrayList<>(copy);
+        // Agregar el nodo izquierdo.
+        if (!copy2.isEmpty()) {
+            binaryTree.addRight(fibonaccis.getLast());
+            copy2.remove(copy.size()-1);
+            binaryTree.addLeft(fibonaccis.getLast());
+            generateFibonacciTr(copy2,binaryTree.getLeft());
+        }
+        return binaryTree;
+    }
+
+
+
+        /*
+        if (fibonaccis.isEmpty()){
+            return binaryTree;
+        } else {
+            binaryTree.addRight(fibonaccis.get(fibonaccis.size()-1));
+            if (fibonaccis.isEmpty()){
+                return binaryTree;
+            }
+            binaryTree.addLeft(fibonaccis.get(fibonaccis.size()-2));
+            fibonaccis.remove(fibonaccis.size()-1);
+            generateFibonacciTree(fibonaccis, binaryTree.getRight());
+            generateFibonacciTree(fibonaccis, binaryTree.getLeft());
+        }
+        return binaryTree;*/
+    public static List <Integer> generateFibonacciList (int num) {
+        List<Integer> fibonaccis = new ArrayList<>();
+        fibonaccis.add(0);
+        fibonaccis.add(1);
+        while (num > fibonaccis.get(fibonaccis.size()-1)){
+            fibonaccis.add(fibonaccis.get(fibonaccis.size()-1) + fibonaccis.get(fibonaccis.size()-2));
+        }
+        if (fibonaccis.get(fibonaccis.size()-1) == num) {
+            return fibonaccis;
+        }
+        else {
+            throw new RuntimeException("El numero no pertenece a la sucesion de Fibonacci");
+        }
+    }
+
     /*
-
-
+    A PARTIR DE UN NUMERO DADO, ENCUENTRA UN ARBOL DIVIDIENDO ESE NUMERO POR 2, Y AGREGANDOLOS A HIJOS IZQUIERDOS Y DERECHOS.
+    EN CASO DE QUE EL NUMERO SEA IMPAR. AGREGA A LA DERECHA EL NUMERO MAS GRANDE.
      */
-    public static BinaryTree findFibonacciTree (BinaryTree binaryTree){
+    public static BinaryTree findTreeByDivision (BinaryTree binaryTree){
             if (binaryTree.getRootValue() == 1){
                 return binaryTree;
             } else {
                 int hijo = binaryTree.getRootValue() /2;
                 binaryTree.addLeft(hijo);
                 binaryTree.addRight(binaryTree.getRootValue() - hijo);
-                findFibonacciTree(binaryTree.getLeft());
-                findFibonacciTree(binaryTree.getRight());
+                findTreeByDivision(binaryTree.getLeft());
+                findTreeByDivision(binaryTree.getRight());
             }
         return binaryTree;
     }

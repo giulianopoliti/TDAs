@@ -10,11 +10,8 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
-        BinaryTree binaryTree = new DynamicBinaryTree(5);
-        binaryTree = Example.findFibonacciTree(binaryTree);
-        print(binaryTree);
-
-
+        BinaryTree binaryTree = Example.createFibonacciTree(5);
+        printByLevel(binaryTree, 5);
 
 
 
