@@ -10,11 +10,67 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
+        Dictionary dictionary = new DynamicDictionary();
+        dictionary.add(1,2);
+        dictionary.add(1,3);
+        dictionary.add(2,2);
+        ISet set = Example.setOfKeysAndValues(dictionary);
+        while (!set.isEmpty()){
+            int value = set.choose();
+            System.out.println(value);
+            set.remove(value);
+        }
+
+
+
+        /*
+
+        IStack stack = new DynamicStack();
+        stack.add(8);
+        stack.add(5);
+        stack.add(5);
+        stack.add(5);
+        stack.add(7);
+        stack.add(5);
+        stack.add(4);
+        stack.add(2);
+        boolean esSpecific = Example.specificStack(stack);
+        System.out.println(esSpecific);
+
+
+*/
+        /*
+        ISet bag = new Bag(40);
+        bag.add(5);
+        bag.add(5);
+        bag.add(5);
+        bag.add(-10);
+        while (!bag.isEmpty()) {
+            int value = bag.choose();
+            System.out.println(value);
+            bag.remove(value);
+        }*/
+
+
+
+        /*
+        ISet set = new DynamicSet();
+        set.add(1);
+        set.add(2);
+        set.add(3);
+        set.add(4);
+        set.add(5);
+        set.add(6);
+
+        boolean esInductive = Example.isInductive(set,1,7);
+        System.out.println(esInductive);
+*/
+/*
         BinaryTree binaryTree = Example.createFibonacciTree(5);
         printByLevel(binaryTree, 5);
 
 
-
+*/
 
         /*
         MultipleDictionaryWithStack multipleDictionary = new DynamicMultipleDictionaryWithStack();

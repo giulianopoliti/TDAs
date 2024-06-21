@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class Example {
 
+
+
     public static void print(Stack stack) {
         Stack aux = copy(stack);
         while(!aux.isEmpty()) {
@@ -16,7 +18,7 @@ public class Example {
         }
     }
 
-    public static Stack copy(Stack stack) {
+    public static Stack copy(IStack stack) {
         Stack copy = new Stack();
         Stack copy2 = new Stack();
 
@@ -36,8 +38,86 @@ public class Example {
             copy.add(copy2.getTop());
             copy2.remove();
         }
-
         return copy;
+    }
+
+
+           /* if (count > 0 && count < 15){
+        count++;
+    }*/
+    public static ISet setOfKeysAndValues (Dictionary dictionary) {
+        ISet keys = dictionary.getKeys();
+        ISet copyKeys = copy(keys);
+        ISet result = new DynamicSet();
+        while (!copyKeys.isEmpty()){
+            ISet copyKeys2 = copy(keys);
+            int key = copyKeys.choose();
+            while (!copyKeys2.isEmpty()) {
+                int key2 = copyKeys2.choose();
+                if (dictionary.get(key2) == key) {
+                    result.add(key);
+                    copyKeys2.remove(key2);
+                    break;
+                }
+                copyKeys2.remove(key2);
+
+            }
+            copyKeys.remove(key);
+        }
+        if (result.isEmpty()){
+            throw new RuntimeException("No hubo llaves que se repitan con algun valor.");
+        } else return result;
+    }
+
+    public static boolean specificStack (IStack stack) {
+        IStack copy = copy(stack);
+        int countPares = 0;
+        int countImpares = 0;
+        Integer previous = null;
+        while (!copy.isEmpty() && copy.getTop() % 2 == 0) {
+            if (countPares == 0) {
+                countPares++;
+                previous = copy.getTop();
+                copy.remove();
+            } else {
+                if (copy.getTop() + 2 == previous || copy.getTop() - 2 == previous) {
+                    countPares++;
+                    previous = copy.getTop();
+                    copy.remove();
+                } else return false;
+            }
+        }
+
+        if (countPares > 15) {
+            return false;
+        }
+        previous = null; // no me gusta poner null pero ya estoy quemado
+        while (!copy.isEmpty() && countImpares <= 3 && copy.getTop() % 2 == 1) {
+            if (countImpares == 0) {
+                countImpares++;
+                previous = copy.getTop();
+                copy.remove();
+            } else {
+                if (copy.getTop() + 2 == previous || copy.getTop() - 2 == previous) {
+                    countImpares++;
+                    previous = copy.getTop();
+                    copy.remove();
+                } else break;
+            }
+        }
+        if (countImpares < 2) {
+            return false;
+        }
+        while (!copy.isEmpty()) {
+            int value = copy.getTop();
+            copy.remove();
+            if (copy.isEmpty()){
+                if (value % 2 != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public static boolean isEven(Stack stack) {
@@ -301,7 +381,7 @@ public class Example {
 
         return intersection;
     }
-
+    // TE DICE SI UN INT ESTRA DENTRO DEL CONJUNTO
     public static boolean in(int a, ISet set) {
         ISet copy = copy(set);
 
@@ -491,16 +571,118 @@ public class Example {
     }
     public static boolean apareceMasDeTresVeces (IQueue queue, int number){
         IQueue copy = copy(queue);
-        int count = 0;
-        while (!copy.isEmpty()){
-            if (copy.getFirst() == number){
-                if (++count == 3){
-                    return true;
+        int count = 0;  //O(C)
+        while (!copy.isEmpty()){ // O (N+C+C+C+C+C)
+            if (copy.getFirst() == number){ // O(C)
+                if (++count == 3){ //O (C)
+                    return true; // O(C)
                 }
-                copy.remove();
+                copy.remove(); // O(C)
             }
         }
-        return false;
+        return false; // O(C)
+    }
+
+
+    public static IQueueWithPriority copyIQueueWithPriority (IQueueWithPriority queueWithPriority) {
+        IQueueWithPriority copy = new DynamicQueueWithPriority();
+        IQueueWithPriority copy2 = new DynamicQueueWithPriority();
+
+        while (!queueWithPriority.isEmpty()) {
+            copy.add(queueWithPriority.getFirst(), queueWithPriority.getPriority());
+            copy2.add(queueWithPriority.getFirst(), queueWithPriority.getPriority());
+            queueWithPriority.remove();
+        }
+        while (!copy2.isEmpty()) {
+            queueWithPriority.add(copy2.getFirst(),copy2.getPriority());
+            copy2.remove();
+        }
+        return copy;
+    }
+
+    public static boolean esCreciente(IQueueWithPriority queueWithPriority) {
+        if (queueWithPriority.isEmpty()) {
+            return true;
+        }
+        int value = queueWithPriority.getFirst();
+        int priority = queueWithPriority.getPriority();
+        queueWithPriority.remove();
+        if (priority >= queueWithPriority.getPriority() || value >= queueWithPriority.getFirst()) {
+            return false;
+        }
+        return esCreciente(queueWithPriority);
+    }
+
+    public static boolean esDecreciente (IQueueWithPriority queueWithPriority) {
+        if (queueWithPriority.isEmpty()) {
+            return true;
+        }
+        int value = queueWithPriority.getFirst();
+        int priority = queueWithPriority.getPriority();
+        queueWithPriority.remove();
+        if (priority <= queueWithPriority.getPriority() || value <= queueWithPriority.getFirst()) {
+            return false;
+        }
+        return esDecreciente(queueWithPriority);
+    }
+
+    public static String definirQueue(IQueueWithPriority queueWithPriority) {
+        if (queueWithPriority.isEmpty()){
+            throw new RuntimeException("La cola esta vacia.");
+        }
+        IQueueWithPriority copy = copyIQueueWithPriority(queueWithPriority);
+        int v1 = copy.getFirst();
+        int p1  = copy.getPriority();
+        copy.remove();
+        if (!queueWithPriority.isEmpty()) {
+            if (v1 > copy.getFirst() && p1 > copy.getPriority()) {
+                if(esDecreciente(queueWithPriority)){
+                    return "Es creciente.";
+                }
+            }else if (v1 < copy.getFirst() && p1 < copy.getPriority()) {
+                if(esCreciente(queueWithPriority)){
+                    return "Es decreciente";
+                }
+            }
+        }
+        return "No es nada.";
+    }
+
+
+    public static boolean isInductive (ISet set, int a, int b) {
+        if (set.isEmpty()){
+            throw new RuntimeException("Es un conjunto vacio.");
+        } if (a >= b) {
+            throw new RuntimeException("Intervalo erroneo, B debe ser mayor a A");
+        }
+        ISet copy = copy(set);
+        boolean tieneEl1 = false;
+        int count = b-a;
+        while (!copy.isEmpty()){
+            int value = copy.choose();
+            if (value == 1) {
+                tieneEl1 = true;
+            }
+            copy.remove(value);
+        }
+        if (!tieneEl1){
+            return false;
+        }
+        boolean [] array = new boolean[count];
+        ISet copy2 = copy(set);
+        while (!copy2.isEmpty()){
+            int value = copy2.choose();
+            if (value >= a && value < b) {
+                array [value-a] = true;
+            }
+            copy2.remove(value);
+        }
+        for (int i = 0; i < array.length; i++) {
+            if (!array[i]) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static BinaryTree createFibonacciTree (int num) {
