@@ -8,8 +8,21 @@ import java.util.Objects;
 
 public class Example {
 
+    public static void copyQueueOfStack (IQueueOfStacks iQueueOfStacks){
+        IQueueOfStacks copy = new DynamicQueueOfStacks(iQueueOfStacks.getNumElementsOfStack());
+        IQueueOfStacks copy2 = new DynamicQueueOfStacks(iQueueOfStacks.getNumElementsOfStack());
+        int numElements = iQueueOfStacks.getNumElementsOfStack();
+        while (copy2.isEmpty()){
 
+        }
 
+    }
+    public static void calcularTrazaQueueOfStack (IQueueOfStacks queue){
+        int count = 0;
+        while (!queue.isEmpty()){
+
+        }
+    }
     public static void print(Stack stack) {
         Stack aux = copy(stack);
         while(!aux.isEmpty()) {

@@ -9,7 +9,36 @@ import java.util.Queue;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+/*
+        IStack stack = new StackOfNElements(3);
+        stack.add(1);
+        stack.add(2);
+        stack.add(3);
+        while (!stack.isEmpty()){
+            System.out.println(stack.getTop());
+            stack.remove();
+        } */
 
+
+        DynamicQueueOfStacks dynamicQueueOfStacks = new DynamicQueueOfStacks(3);
+
+        dynamicQueueOfStacks.add(1);
+        dynamicQueueOfStacks.add(2);
+        dynamicQueueOfStacks.add(3);
+        dynamicQueueOfStacks.add(4);
+        dynamicQueueOfStacks.add(5);
+        dynamicQueueOfStacks.add(6);
+        dynamicQueueOfStacks.add(7);
+        dynamicQueueOfStacks.add(8);
+        dynamicQueueOfStacks.add(9);
+        dynamicQueueOfStacks.add(8);
+        while (!dynamicQueueOfStacks.isEmpty()){
+            int value = dynamicQueueOfStacks.getFirst();
+            System.out.println(value);
+            dynamicQueueOfStacks.remove();
+        }
+
+        /*
         Dictionary dictionary = new DynamicDictionary();
         dictionary.add(1,2);
         dictionary.add(1,3);
@@ -19,7 +48,7 @@ public class Main {
             int value = set.choose();
             System.out.println(value);
             set.remove(value);
-        }
+        }*/
 
 
 
