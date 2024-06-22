@@ -31,7 +31,7 @@ public class Main {
         dynamicQueueOfStacks.add(7);
         dynamicQueueOfStacks.add(8);
         dynamicQueueOfStacks.add(9);
-        dynamicQueueOfStacks.add(8);
+
         while (!dynamicQueueOfStacks.isEmpty()){
             int value = dynamicQueueOfStacks.getFirst();
             System.out.println(value);

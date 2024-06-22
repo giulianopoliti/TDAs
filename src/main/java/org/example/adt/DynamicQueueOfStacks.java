@@ -9,15 +9,13 @@ import org.example.clazz.Example;
 import java.util.Objects;
 public class DynamicQueueOfStacks implements IQueueOfStacks {
     private final int numElementsOfStack;
-    private int numOfStacksMax;
-    private int currentNumOfStacks;
+    private int numElementsMax;
     private NodeOfStack first;
 
     public DynamicQueueOfStacks(int numElementsOfStack) {
         this.numElementsOfStack = numElementsOfStack;
-        this.numOfStacksMax = numElementsOfStack -1;
+        this.numElementsMax = (int) Math.pow(numElementsOfStack, 2);
         this.first = null;         // Inicializa first como null
-        this.currentNumOfStacks = 0;
     }
 
     public void add(int a) {
@@ -27,15 +25,20 @@ public class DynamicQueueOfStacks implements IQueueOfStacks {
             NodeOfStack nodeOfStack = new NodeOfStack(stack, this.first);
             this.first = nodeOfStack;
         }
+        if (numElementsMax == 0) {
+            throw new RuntimeException("Limite alcanzado");
+        }
         try {
             // Intenta agregar el elemento a la primera pila.
             this.first.getFirst().add(a);
+            numElementsMax--;
         } catch (RuntimeException e) {
             // Si la pila está llena, crea una nueva pila y agrega el elemento a ella.
             IStack stack = new StackOfNElements(numElementsOfStack);
             NodeOfStack nodeOfStack = new NodeOfStack(stack, first);
             this.first = nodeOfStack;
             this.first.getFirst().add(a);
+            numElementsMax--;
         }
     }
 
