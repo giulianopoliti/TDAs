@@ -10,12 +10,14 @@ import java.util.Objects;
 public class DynamicQueueOfStacks implements IQueueOfStacks {
     private final int numElementsOfStack;
     private int numElementsMax;
+    private int count;
     private NodeOfStack first;
 
     public DynamicQueueOfStacks(int numElementsOfStack) {
         this.numElementsOfStack = numElementsOfStack;
         this.numElementsMax = (int) Math.pow(numElementsOfStack, 2);
         this.first = null;         // Inicializa first como null
+        this.count = 0;
     }
 
     public void add(int a) {
@@ -25,7 +27,7 @@ public class DynamicQueueOfStacks implements IQueueOfStacks {
             NodeOfStack nodeOfStack = new NodeOfStack(stack, this.first);
             this.first = nodeOfStack;
         }
-        if (numElementsMax == 0) {
+        if (numElementsMax == count) {
             throw new RuntimeException("Limite alcanzado");
         }
         try {
@@ -38,7 +40,7 @@ public class DynamicQueueOfStacks implements IQueueOfStacks {
             NodeOfStack nodeOfStack = new NodeOfStack(stack, first);
             this.first = nodeOfStack;
             this.first.getFirst().add(a);
-            numElementsMax--;
+            count++;
         }
     }
 
@@ -69,6 +71,7 @@ public class DynamicQueueOfStacks implements IQueueOfStacks {
                 this.first = null;
             }
         }
+        count ++;
     }
 
     @Override
@@ -84,10 +87,6 @@ public class DynamicQueueOfStacks implements IQueueOfStacks {
         return this.first == null;
     }
 
-    @Override
-    public boolean isFull() {
-        return false;
-    }
 
     @Override
     public int getNumElementsOfStack() {

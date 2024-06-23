@@ -8,20 +8,53 @@ import java.util.Objects;
 
 public class Example {
 
-    public static void copyQueueOfStack (IQueueOfStacks iQueueOfStacks){
-        IQueueOfStacks copy = new DynamicQueueOfStacks(iQueueOfStacks.getNumElementsOfStack());
-        IQueueOfStacks copy2 = new DynamicQueueOfStacks(iQueueOfStacks.getNumElementsOfStack());
-        int numElements = iQueueOfStacks.getNumElementsOfStack();
-        while (copy2.isEmpty()){
-
-        }
-
-    }
-    public static void calcularTrazaQueueOfStack (IQueueOfStacks queue){
+    public static IQueueOfStacks calcularTraspuesta (IQueueOfStacks queue) {
+        IQueueOfStacks copy = copyQueueOfStack(queue);
+        IQueueOfStacks copy2 = copyQueueOfStack(queue);
+        IQueueOfStacks traspuesta = new DynamicQueueOfStacks(queue.getNumElementsOfStack());
         int count = 0;
-        while (!queue.isEmpty()){
-
+        while (!copy.isEmpty()) {
+            index--;
+            for (int i = 0; i < copy.getNumElementsOfStack(); i++) {
+                if (i == index) {
+                    traza += copy.getFirst();
+                }
+                copy.remove();
+            }
         }
+        }
+    }
+
+    public static IQueueOfStacks copyQueueOfStack (IQueueOfStacks iQueueOfStacks){
+        int numElements = iQueueOfStacks.getNumElementsOfStack();
+        IQueueOfStacks copy = new DynamicQueueOfStacks(numElements);
+        IQueueOfStacks copy2 = new DynamicQueueOfStacks(numElements);
+        while (!iQueueOfStacks.isEmpty()){
+            copy.add(iQueueOfStacks.getFirst());
+            iQueueOfStacks.remove();
+        }
+        while (!copy.isEmpty()){
+            copy2.add(copy.getFirst());
+            iQueueOfStacks.add(copy.getFirst());
+            copy.remove();
+        }
+        return copy2;
+    }
+
+    public static int calcularTraza (IQueueOfStacks queue) {
+        IQueueOfStacks copy = copyQueueOfStack(queue);
+        int traza = 0;
+        int index = copy.getNumElementsOfStack();
+        while (!copy.isEmpty()) {
+            index--;
+            for (int i = 0; i < copy.getNumElementsOfStack(); i++) {
+                if (i == index) {
+                    traza += copy.getFirst();
+                }
+                copy.remove();
+            }
+        }
+        return traza;
     }
     public static void print(Stack stack) {
         Stack aux = copy(stack);

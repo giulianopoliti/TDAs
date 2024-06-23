@@ -8,6 +8,5 @@ public interface IQueueOfStacks {
     int getFirst();
 
     boolean isEmpty();
-    boolean isFull();
     int getNumElementsOfStack();
 }
