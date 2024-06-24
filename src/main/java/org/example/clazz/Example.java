@@ -8,23 +8,67 @@ import java.util.Objects;
 
 public class Example {
 
-    public static IQueueOfStacks calcularTraspuesta (IQueueOfStacks queue) {
-        IQueueOfStacks copy = copyQueueOfStack(queue);
-        IQueueOfStacks copy2 = copyQueueOfStack(queue);
+    public static IQueueOfStacks sumaOfQueueOfStacks (IQueueOfStacks q1, IQueueOfStacks q2) {
+        if (q1.getNumElementsOfStack() != q2.getNumElementsOfStack()) {
+            throw new RuntimeException("Las matrices tienen que ser del mismo tamaño.");
+        }
+        IQueueOfStacks copyQ1 = Example.copyQueueOfStack(q1);
+        IQueueOfStacks copyQ2 = Example.copyQueueOfStack(q2);
+        IQueueOfStacks sumaAlReves = new DynamicQueueOfStacks(q1.getNumElementsOfStack());
+        IQueueOfStacks suma = new DynamicQueueOfStacks(q1.getNumElementsOfStack());
+        while (!copyQ1.isEmpty()) {
+            sumaAlReves.add(copyQ1.getFirst() + copyQ2.getFirst());
+            copyQ1.remove();
+            copyQ2.remove();
+        }
+        while (!sumaAlReves.isEmpty()) {
+            suma.add(sumaAlReves.getFirst());
+            sumaAlReves.remove();
+        }
+        return suma;
+    }
+    public static IQueueOfStacks traspuestaOfQueueOfStacks(IQueueOfStacks queue) {
+        IQueueOfStacks copy = Example.copyQueueOfStack(queue);
         IQueueOfStacks traspuesta = new DynamicQueueOfStacks(queue.getNumElementsOfStack());
-        int count = 0;
-        while (!copy.isEmpty()) {
-            index--;
-            for (int i = 0; i < copy.getNumElementsOfStack(); i++) {
-                if (i == index) {
-                    traza += copy.getFirst();
+        int numElements = queue.getNumElementsOfStack();
+        IQueue[] tempsQueue = new StaticQueueOfNElements[numElements];
+
+        // Inicializar cada pila en el array de pilas temporales
+        for (int i = 0; i < numElements; i++) {
+            tempsQueue[i] = new StaticQueueOfNElements(numElements);
+        }
+
+        // Llenar las pilas temporales con los elementos de la copia de la cola
+        for (int i = 0; i < numElements; i++) {
+            for (int j = 0; j < numElements; j++) {
+                if (!copy.isEmpty()) {
+                    tempsQueue[j].add(copy.getFirst());
+                    copy.remove();
                 }
-                copy.remove();
             }
         }
+
+        // Transferir los elementos de las pilas temporales a la cola de traspuesta
+        for (int j = numElements -1; j >= 0; j--) {
+            while (!tempsQueue[j].isEmpty()) {
+                traspuesta.add(tempsQueue[j].getFirst());
+                tempsQueue[j].remove();
+            }
         }
+
+        return traspuesta;
     }
 
+
+    public static boolean IQueueOfStackIsFull (IQueueOfStacks queue) {
+        try {
+            IQueueOfStacks copy = copyQueueOfStack(queue);
+            copy.add(1);
+        } catch (RuntimeException runtimeException) {
+            return false;
+        }
+        return true;
+    }
     public static IQueueOfStacks copyQueueOfStack (IQueueOfStacks iQueueOfStacks){
         int numElements = iQueueOfStacks.getNumElementsOfStack();
         IQueueOfStacks copy = new DynamicQueueOfStacks(numElements);

@@ -20,7 +20,7 @@ public class Main {
         } */
 
 
-        IQueueOfStacks dynamicQueueOfStacks = new DynamicQueueOfStacks(4);
+        IQueueOfStacks dynamicQueueOfStacks = new DynamicQueueOfStacks(3);
 
         dynamicQueueOfStacks.add(1);
         dynamicQueueOfStacks.add(2);
@@ -31,22 +31,37 @@ public class Main {
         dynamicQueueOfStacks.add(7);
         dynamicQueueOfStacks.add(8);
         dynamicQueueOfStacks.add(9);
+        /*
         dynamicQueueOfStacks.add(10);
         dynamicQueueOfStacks.add(11);
         dynamicQueueOfStacks.add(12);
         dynamicQueueOfStacks.add(13);
         dynamicQueueOfStacks.add(14);
         dynamicQueueOfStacks.add(15);
-        dynamicQueueOfStacks.add(16);
+        dynamicQueueOfStacks.add(16);*/
 
         IQueueOfStacks dynamicQueueOfStacks1 = Example.copyQueueOfStack(dynamicQueueOfStacks);
-        while (!dynamicQueueOfStacks.isEmpty()){
+
+        IQueueOfStacks suma = Example.sumaOfQueueOfStacks(dynamicQueueOfStacks, dynamicQueueOfStacks1);
+        while (!suma.isEmpty()) {
+            System.out.println(suma.getFirst());
+            suma.remove();
+        }
+/*
+        /*while (!dynamicQueueOfStacks.isEmpty()){
             int value = dynamicQueueOfStacks.getFirst();
             System.out.println(value);
             dynamicQueueOfStacks.remove();
-        }
+        }*/
+/*
+        IQueueOfStacks traspuesta = Example.traspuestaOfQueueOfStacks(dynamicQueueOfStacks);
+        while (!traspuesta.isEmpty()){
+            System.out.println(traspuesta.getFirst());
+            traspuesta.remove();
+        }*/
+        /*
         System.out.println("El valor de la traza es: " + Example.calcularTraza(dynamicQueueOfStacks1));
-
+*/
         /*
         Dictionary dictionary = new DynamicDictionary();
         dictionary.add(1,2);
