@@ -16,7 +16,7 @@ public class DynamicQueue implements IQueue {
     @Override
     public void remove() {
         if(this.isEmpty()) {
-            throw new RuntimeException("No se puede desapilar una pila vacia");
+            throw new RuntimeException("No se puede desapilar una cola vacia");
         }
 
         if(this.first.getNext() == null) {

@@ -3,12 +3,48 @@ package org.example;
 import org.example.adt.*;
 import org.example.clazz.Example;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
+        IStack stack = new DynamicStackWithNElements(5);
+        stack.add(1);
+        stack.add(1);
+        stack.add(1);
+
+        stack.add(1);
+        stack.add(1);
+        while (!stack.isEmpty()) {
+            System.out.println(stack.getTop());
+            stack.remove();
+        }
+
+
+/*
+
+        char c = ' '; // El carácter del cual quieres obtener el valor ASCII
+        int asciiValue = (int) c; // Convertir el carácter a su valor ASCII
+
+        System.out.println("El valor ASCII de " + c + " es " + asciiValue);
+        
+*/
+        //String texto = "Muchos años después, frente al pelotón de fusilamiento, el coronel Aureliano Buendía había de recordar aquella tarde remota en que su padre lo llevó a conocer el hielo. Macondo era entonces una aldea de veinte casas de barro y cañabrava construidas a la orilla de un río de aguas diáfanas que se precipitaban por un lecho de piedras pulidas, blancas y enormes como huevos prehistóricos. El mundo era tan reciente, que muchas cosas carecían de nombre, y para mencionarlas había que señalarlas con el dedo.\n\nTodos los años, por el mes de marzo, una familia de gitanos desarrapados plantaba su carpa cerca de la aldea, y con un grande alboroto de pitos y timbales daban a conocer los nuevos inventos. Primero llevaron el imán. Un gitano corpulento, de barba montaraz y manos de gorrión, que se presentó con el nombre de Melquiades, hizo una truculenta demostración pública de lo que él mismo llamaba la octava maravilla de los sabios alquimistas de Macedonia.\n\nFue lo último que se supo de él. La carpa se plantó por última vez en marzo. Los gitanos se fueron, y con ellos se fue Melquiades, quien antes había recorrido el mundo inventando cosas. Había traído el imán a la aldea y había pensado con su pluma.";
+        String textoCodif = "Oxfkrv dqrv ghvsxhv, iuhpwh dñ shñrwrp gh ixvlñdolhpwr, hñ frurphñ Dxuhñldpr Exhpgld kdeld gh uhfrugdu dtxhññd wdugh uhorwd hp txh vx sdguh ñr ññhyr d frprfhu hñ klhñr. Odfrpgr hud hpwrpfhv xpd dñghd gh yhlpwh fdvdv gh eduur b fdqdeudyd frpvwuxlgdv d ñd rulññd gh xp ulr gh djxdv gldidpdv txh vh suhflslwdedp sru xp ñhfkr gh slhgudv sxñlgdv, eñdpfdv b hpruohv fror kxhyrv suhklvwrulfrv. Hñ oxpgr hud wdp uhflhpwh, txh oxfkdv frvdv fduhfldp gh proeuh, b sdud ohpflrpduñdv kdeld txh vhqdñduñdv frp hñ ghgr.\n\nrgrv ñrv dqrv, sru hñ ohv gh oducr, xpd idolñld gh jlwdprv ghvduudsdgrv sñdpwded vx fdusd fhufd gh ñd dñghd, b frp xp judpgh dñerurwr gh slwrv b wloedñhv gdedp d frprfhu ñrv pxhyrv lpyhpwrv. Sulohur ññhydurp hñ lodp. Xp jlwdpr frusxñhpwr, gh edued orpwdudc b odprv gh jruulrp, txh vh suhvhpwr frp hñ proeuh gh Ohñtxldghv, klcr xpd wuxfxñhpwd ghorvwudflrp sxeñlfd gh ñr txh hñ olvor ññdoded ñd rfwdyd odudylññd gh ñrv vdelrv dñtxlolvwdv gh Odfhgrpld.\n\nIxh ñr xñwlor txh vh vxsr gh hñ. Ñd fdusd vh sñdpwr sru xñwlod yhc hp oducr. Ñrv jlwdprv vh ixhurp, b frp hññrv vh ixh Ohñtxldghv, txlhp dpwhv kdeld uhfruulgr hñ oxpgr lpyhpwdpgr frvdv. Kdeld wudlgr hñ lodp d ñd dñghd b kdeld shpvdgr frp vx sñxod.";
+
+        int desplazamiento = Example.calcularDesplazamiento(textoCodif);
+        System.out.println(desplazamiento);
+        //for (Map.Entry<Character, Integer> entry : alphabetMap.entrySet()) {
+          //  System.out.println("clave: " + entry.getKey() + " ---> valor: " + entry.getValue());
+        //}/*
+
+        //System.out.println(Example.rotar(textoCodif));
+        System.out.println(Example.descifrarMensaje2(textoCodif));
+
 /*
         IStack stack = new StackOfNElements(3);
         stack.add(1);
@@ -19,7 +55,7 @@ public class Main {
             stack.remove();
         } */
 
-
+/*
         IQueueOfStacks dynamicQueueOfStacks = new DynamicQueueOfStacks(3);
 
         dynamicQueueOfStacks.add(1);
@@ -39,7 +75,7 @@ public class Main {
         dynamicQueueOfStacks.add(14);
         dynamicQueueOfStacks.add(15);
         dynamicQueueOfStacks.add(16);*/
-
+/*
         IQueueOfStacks dynamicQueueOfStacks1 = Example.copyQueueOfStack(dynamicQueueOfStacks);
 
         IQueueOfStacks suma = Example.sumaOfQueueOfStacks(dynamicQueueOfStacks, dynamicQueueOfStacks1);

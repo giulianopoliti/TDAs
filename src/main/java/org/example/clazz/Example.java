@@ -1,12 +1,168 @@
 package org.example.clazz;
 
 import org.example.adt.*;
+import org.example.adt.Dictionary;
+import org.example.adt.Stack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Example {
+    public static int calcularDesplazamiento (String string) {
+        HashMap<Character, Integer> alphabeticMap = Example.generateDictionaryOfAlphabet(); // utilizamos el mapa que generamos con todos las letras
+        for (char c: string.toCharArray()) {
+            c = Character.toLowerCase(c);
+            if (!alphabeticMap.containsKey(c)) { // corregimos los tildes aca
+                switch (c) {
+                    case 'á': c = 'a'; break;
+                    case 'é': c = 'e'; break;
+                    case 'í': c = 'i'; break;
+                    case 'ó': c = 'o'; break;
+                    case 'ú':
+                    case 'ü': c = 'u'; break;
+                    case 'ñ': c = 'n'; break;
+                }
+            }
+            if (Character.isLetter(c) || c == 'ñ') {
+                alphabeticMap.put(c, alphabeticMap.get(c) +1);
+            }
+        }
+
+        char letraConMasFrecuencia = ' ';
+        int valueMax = 0;
+        for (Map.Entry<Character, Integer> entry : alphabeticMap.entrySet()) {
+            if (entry.getValue() > valueMax) {
+                letraConMasFrecuencia = entry.getKey();
+                valueMax = entry.getValue();
+            }
+        }
+        System.out.println(letraConMasFrecuencia);
+        int desplazamiento = letraConMasFrecuencia - 'a';
+        return desplazamiento;
+    }
+
+    public static String descifrarMensaje2(String string) {
+        String mensaje = "";
+        int desplazamiento = Example.calcularDesplazamiento(string);  // Aquí asignamos directamente el desplazamiento conocido para simplificar el ejemplo
+        final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
+        for (char c : string.toCharArray()) {
+            char charDescifrado = c;
+
+            if (Character.isLowerCase(c)) {
+                charDescifrado = (char) ((c - INICIO_MINUSCULAS - desplazamiento + LONGITUD_ALFABETO) % LONGITUD_ALFABETO + INICIO_MINUSCULAS);
+                if (charDescifrado > 76 && charDescifrado < 79) {
+                    charDescifrado = (char)(charDescifrado +1);
+                }
+            } else if (Character.isUpperCase(c)) {
+                charDescifrado = (char) ((c - INICIO_MAYUSCULAS - desplazamiento + LONGITUD_ALFABETO) % LONGITUD_ALFABETO + INICIO_MAYUSCULAS);
+                if (charDescifrado > 108 && charDescifrado < 111) {
+                    charDescifrado = (char)(charDescifrado +1);
+                }
+            }
+
+            mensaje += charDescifrado;
+        }
+
+        return mensaje;
+    } // funciona para todo, pero toma la m como l, la n como m, y no esta incluida la ñ, fue la unica forma que pude
+
+
+
+    public static String descifrarMensaje (String string) {
+        String mensajeFinal = "";
+        final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
+        int desplazamiento = -Example.calcularDesplazamiento(string);
+        for (int i = 0; i < string.length(); i++) {
+            char caracterActual = string.charAt(i);
+            if (!Character.isLetter(caracterActual)) {
+                mensajeFinal += caracterActual;
+            }
+
+            int ascii = (int) caracterActual;
+            boolean esMayuscula = Character.isUpperCase(caracterActual);
+            int nuevoAscii = ((ascii - (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS)) + desplazamiento) % LONGITUD_ALFABETO;
+            if (nuevoAscii < 0) {
+                nuevoAscii += LONGITUD_ALFABETO;
+            }
+            if (nuevoAscii == 'n' || nuevoAscii == 'm' || nuevoAscii == 'l' || nuevoAscii == 'ñ') {
+                nuevoAscii++;
+            }
+            int charFinal = (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS) + nuevoAscii;
+            mensajeFinal += Character.toString((char) charFinal);
+        }
+        return mensajeFinal;
+    }
+
+
+    public static String rotar(String cadenaOriginal) {
+        // En ASCII, la a es 97, b 98, A 65, B 66, etcétera
+        final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
+        int desplazamiento = - Example.calcularDesplazamiento(cadenaOriginal);
+        String cadenaRotada = ""; // La cadena nueva, la que estará rotada
+        for (int x = 0; x < cadenaOriginal.length(); x++) {
+            char caracterActual = cadenaOriginal.charAt(x);
+            // Si no es una letra del alfabeto entonces ponemos el char tal y como está
+            // y pasamos a la siguiente iteración
+            if (!Character.isLetter(caracterActual)) {
+                cadenaRotada += caracterActual;
+                continue;
+            }
+
+            int codigoAsciiDeCaracterActual = (int) caracterActual;
+            boolean esMayuscula = Character.isUpperCase(caracterActual);
+
+            // La posición (1 a 26) que ocupará la letra después de ser rotada
+            // El % LONGITUD_ALFABETO se utiliza por si se pasa de 26. Por ejemplo,
+            // la "z", al ser rotada una vez da el valor de 27, pero en realidad debería
+            // regresar a la letra "a", y con mod hacemos eso ya que 27 % 26 == 1,
+            // 28 % 26 == 2, etcétera ;)
+            int nuevaPosicionEnAlfabeto = ((codigoAsciiDeCaracterActual
+                    - (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS)) + desplazamiento) % LONGITUD_ALFABETO;
+            // Arreglar rotaciones negativas
+            if (nuevaPosicionEnAlfabeto == 'n' || nuevaPosicionEnAlfabeto == 'm' || nuevaPosicionEnAlfabeto == 'l' || nuevaPosicionEnAlfabeto == 'ñ') {
+                nuevaPosicionEnAlfabeto++;
+            }
+            if (nuevaPosicionEnAlfabeto < 0)
+                nuevaPosicionEnAlfabeto += LONGITUD_ALFABETO;
+            int nuevaPosicionAscii = (esMayuscula ? INICIO_MAYUSCULAS : INICIO_MINUSCULAS) + nuevaPosicionEnAlfabeto;
+            // Convertir el código ASCII numérico a su representación como símbolo o letra y
+            // concatenar
+            cadenaRotada += Character.toString((char) nuevaPosicionAscii);
+        }
+        return cadenaRotada;
+    }
+
+    public static String descifradoCesar(String texto) {
+        StringBuilder cifrado = new StringBuilder();
+        int codigo = Example.calcularDesplazamiento(texto) % 26;
+        for (int i = 0; i < texto.length(); i++) {
+            if (texto.charAt(i) >= 'a' && texto.charAt(i) <= 'z') {
+                if ((texto.charAt(i) - codigo) < 'a') {
+                    cifrado.append((char) (texto.charAt(i) - codigo + 26));
+                } else {
+                    cifrado.append((char) (texto.charAt(i) - codigo));
+                }
+            } else if (texto.charAt(i) >= 'A' && texto.charAt(i) <= 'Z') {
+                if ((texto.charAt(i) - codigo) < 'A') {
+                    cifrado.append((char) (texto.charAt(i) - codigo + 26));
+                } else {
+                    cifrado.append((char) (texto.charAt(i) - codigo));
+                }
+            }
+        }
+        return cifrado.toString();
+    }
+
+    public static HashMap<Character, Integer> generateDictionaryOfAlphabet (){
+        HashMap<Character, Integer> hashMap = new HashMap<>();
+        for (char c = 'a'; c <= 'n'; c++) { // Lleno el diccionario con las letras del alfabeto y valores asociados por ASCII
+            hashMap.put(c, 0);  // Ejemplo: Valor a, Valor b, ...
+        }
+        hashMap.put('ñ', 0); // metemos la ñ despues de la n
+        for (char c = 'o'; c <= 'z'; c++) {
+            hashMap.put(c, 0);  // de la o hasta la z
+        }
+        return hashMap;
+    }
 
     public static IQueueOfStacks sumaOfQueueOfStacks (IQueueOfStacks q1, IQueueOfStacks q2) {
         if (q1.getNumElementsOfStack() != q2.getNumElementsOfStack()) {
