@@ -96,7 +96,7 @@ public class DynamicSetWithRepeated implements ISet{
 
     @Override
     public boolean isEmpty() {
-        Objects.isNull(this.first);
+        return Objects.isNull(this.first);
     }
 
     @Override
@@ -112,4 +112,4 @@ public class DynamicSetWithRepeated implements ISet{
         return current.getValue();
     }
     }
-}
+
