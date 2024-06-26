@@ -69,5 +69,4 @@ public class DynamicSet implements ISet {
         }
         return current.getValue();
     }
-
 }
