@@ -18,7 +18,6 @@ public class DynamicSetWithRepeated implements ISet{
             this.first = new DictionaryNode(element, 1, this.first);
         }
         this.count++; // el count, cuenta cada elemento con su cantidad, es decir si el elemento 4, tiene de cantidad 2, cuenta doble
-
     }
 
     @Override

@@ -11,6 +11,15 @@ import java.util.Queue;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+
+    ISet setWithBuilder = new SetWithBuilder();
+    setWithBuilder.add(1);
+    while (!setWithBuilder.isEmpty()) {
+        int value = setWithBuilder.choose();
+        System.out.println(value);
+        setWithBuilder.remove(value);
+    }
+        /*
         IQueue queue = new DoubleLinkedDynamicQueue();
         queue.add(1);
         queue.add(1);
@@ -19,7 +28,7 @@ public class Main {
         while (!queue.isEmpty()){
             System.out.println(queue.getFirst());
             queue.remove();
-        }
+        }*/
 
 
 
