@@ -39,7 +39,6 @@ public class Main {
 
 
         /*
-        DynamicStackWithPriority dynamicStackWithPriority = new DynamicStackWithPriority();
         dynamicStackWithPriority.add(1,3);
         dynamicStackWithPriority.add(2,6);
         dynamicStackWithPriority.add(3,9);
@@ -283,6 +282,15 @@ public class Main {
         while (!candidate.isEmpty()){
             System.out.println(candidate.getFirst());
             candidate.remove();
+=======
+        int size = Example.encontrarLargoQueueSobre2(queue);
+        //System.out.println(size);
+
+        IQueue subQueueMasLarga = Example.encontrarSubQueueMasLarga(queue, size);
+        while (!subQueueMasLarga.isEmpty()){
+            System.out.println(subQueueMasLarga.getFirst());
+            subQueueMasLarga.remove();
+>>>>>>> taskQueue
         }
 
 */
