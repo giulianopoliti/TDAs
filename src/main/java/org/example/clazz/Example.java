@@ -1211,7 +1211,7 @@ public class Example {
             copy.remove();
             count++;
         }
-        return count/2;
+        return count;
     }
     public static IQueue encontrarSQMasLarga (IQueue queue){
         IQueue longestCandidate = new DynamicQueue();
