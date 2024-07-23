@@ -100,4 +100,9 @@ public class StaticBinaryTree implements BinaryTree{
             this.getRight().removeRight();
         }
     }
+
+    @Override
+    public boolean isEmpty() {
+        return this == null;
+    }
 }

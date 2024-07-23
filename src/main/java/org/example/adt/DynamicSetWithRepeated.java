@@ -13,16 +13,12 @@ public class DynamicSetWithRepeated implements ISet{
         while (current != null && current.getKey() != element) {
             current = current.getNext();
         }
-<<<<<<< HEAD
-        this.count++; // el count, cuenta cada elemento con su cantidad, es decir si el elemento 4, tiene de cantidad 2, cuenta doble
-=======
         if (current == null) {
             this.first = new DictionaryNode(element, 1, this.first);
         } else if (current.getKey() == element) {
             current.setValue(current.getValue() + 1);
         }
         this.count++; // el count, cuenta cada elemento con su cantidad
->>>>>>> 4e873c15798cc371de2a179c266475f89cec1929
     }
 
     @Override

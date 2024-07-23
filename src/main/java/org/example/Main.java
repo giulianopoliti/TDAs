@@ -12,7 +12,26 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
+        SearchBinaryTree searchBinaryTree = new DynamicSearchBinaryTree(7);
+        searchBinaryTree.add(5);
+        searchBinaryTree.add(12);
+        searchBinaryTree.add(10);
+        searchBinaryTree.add(20);
+        searchBinaryTree.add(3);
+        searchBinaryTree.add(6);
+        searchBinaryTree.add(1);
+        searchBinaryTree.add(4);
+        Dictionary dictionary = Example.countAncestros(searchBinaryTree);
+        ISet set = dictionary.getKeys();
 
+        while (!set.isEmpty()) {
+            int value = set.choose();
+            System.out.println("Clave: " + value + " valor:" + dictionary.get(set.choose()));
+            dictionary.remove(set.choose(), dictionary.get(set.choose()));
+            set.remove(value);
+        }
+
+        /*
         IQueueWithPriority queueWithPriority = new DynamicQueueWithPriority();
         IQueueWithPriority queueWithPriority1 = new DynamicQueueWithPriority();
         queueWithPriority.add(1,2);
@@ -27,7 +46,7 @@ public class Main {
             System.out.println("Valor:" + queueWithPriority.getFirst() + " prioridad: " + queueWithPriority.getPriority());
             queueWithPriority.remove();
 
-        }
+        }*/
 
         /*
         SearchBinaryTreeWithCount binaryTree = new SearchBinaryTreeWithCount(1);

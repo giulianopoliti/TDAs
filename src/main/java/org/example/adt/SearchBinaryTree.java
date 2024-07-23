@@ -7,4 +7,5 @@ public interface SearchBinaryTree {
     void add (int a);
     void removeLeft ();
     void removeRight ();
+    boolean isEmpty();
 }

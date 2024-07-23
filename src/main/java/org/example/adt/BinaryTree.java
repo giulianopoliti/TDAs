@@ -8,5 +8,6 @@ public interface BinaryTree {
     void addRight (int a);
     void removeLeft ();
     void removeRight ();
+    boolean isEmpty();
 
 }

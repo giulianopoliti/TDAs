@@ -8,6 +8,27 @@ import java.util.*;
 
 public class Example {
 
+    public static Dictionary countAncestros (SearchBinaryTree searchBinaryTree) {
+        if (searchBinaryTree == null) {
+            return null;
+        } if (searchBinaryTree.isEmpty()) {
+            return new DynamicDictionary();
+        }
+        Dictionary dictionary = new DynamicDictionary();
+        dictionary.add(searchBinaryTree.getRootValue(), 0);
+        asignarAncestros(searchBinaryTree.getLeft(), dictionary, searchBinaryTree.getRootValue());
+        asignarAncestros(searchBinaryTree.getRight(), dictionary, searchBinaryTree.getRootValue());
+        return dictionary;
+    }
+    public static void asignarAncestros (SearchBinaryTree searchBinaryTree, Dictionary dictionary, int count) {
+        if (searchBinaryTree == null || (searchBinaryTree.getLeft() == null && searchBinaryTree.getRight() == null)) {
+            return;
+        }
+        dictionary.add(searchBinaryTree.getRootValue(), count);
+        asignarAncestros(searchBinaryTree.getLeft(), dictionary, count + searchBinaryTree.getRootValue());
+        asignarAncestros(searchBinaryTree.getRight(), dictionary, count + searchBinaryTree.getRootValue());
+    }
+
     private static int getLastPriority (IQueueWithPriority d1) {
         IQueueWithPriority copy = copyIQueueWithPriority(d1);
         while (!copy.isEmpty()) {

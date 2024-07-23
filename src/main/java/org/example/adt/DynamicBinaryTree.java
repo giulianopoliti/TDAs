@@ -49,4 +49,9 @@ public class DynamicBinaryTree implements BinaryTree{
     public void removeRight() {
         this.right = null;
     }
+
+    @Override
+    public boolean isEmpty() {
+        return this == null;
+    }
 }
