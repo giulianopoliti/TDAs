@@ -1,14 +1,23 @@
 package org.example.adt;
 
+import org.example.clazz.Example;
+
 import java.util.Random;
 
-public class DynamicSet implements ISet {
-
+public class DynamicSetWithBuilder{
     private Node first;
     private int count;
 
-    @Override
-    public void add(int a) {
+    public DynamicSetWithBuilder addAll(ISet set) {
+        ISet copy = Example.copy(set);
+        while (!copy.isEmpty()) {
+            int value = copy.choose();
+            this.add(value);
+            copy.remove(value);
+        }
+        return this;
+    }
+    public DynamicSetWithBuilder add(int a) {
         Node current = this.first;
         while(current != null && current.getValue() != a) {
             current = current.getNext();
@@ -16,11 +25,11 @@ public class DynamicSet implements ISet {
         if(current == null) {
             this.first = new Node(a, this.first);
             this.count++;
-        }
+        } return this;
     }
 
-    @Override
     public void remove(int a) {
+
         if(this.first == null) {
             return;
         }
@@ -52,13 +61,12 @@ public class DynamicSet implements ISet {
         }
     }
 
-    @Override
     public boolean isEmpty() {
         return this.count == 0;
     }
 
-    @Override
     public int choose() {
+
         if(this.count == 0) {
             throw new RuntimeException("No se puede elegir un valor de un conjunto vacio");
         }

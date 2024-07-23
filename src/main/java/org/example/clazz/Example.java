@@ -116,7 +116,7 @@ public class Example {
 
     public static String descifrarMensaje2(String string) {
         String mensaje = "";
-        int desplazamiento = Example.calcularDesplazamiento(string);  // Aquí asignamos directamente el desplazamiento conocido para simplificar el ejemplo
+        int desplazamiento = Example.calcularDesplazamiento(string);
         final int LONGITUD_ALFABETO = 26, INICIO_MINUSCULAS = 97, INICIO_MAYUSCULAS = 65;
         for (char c : string.toCharArray()) {
             char charDescifrado = c;
