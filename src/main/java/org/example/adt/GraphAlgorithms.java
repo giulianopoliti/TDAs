@@ -6,6 +6,7 @@ import java.util.List;
 
 public class GraphAlgorithms {
 
+
     public static int[] getK(boolean[][] adjacencyMatrix) {
         if (adjacencyMatrix == null) {
             throw new RuntimeException("Matriz nula");

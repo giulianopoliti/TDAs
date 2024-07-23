@@ -12,13 +12,67 @@ import java.util.Queue;
 public class Main {
     public static void main(String[] args) {
 
+        IQueueWithPriority queueWithPriority = new DynamicQueueWithPriority();
+        IQueueWithPriority queueWithPriority1 = new DynamicQueueWithPriority();
+        queueWithPriority.add(1,2);
+        queueWithPriority.add(2,3);
+        queueWithPriority.add(2,5);
+        queueWithPriority.add(1,1);
+        queueWithPriority.add(2,4);
+        queueWithPriority1.add(15,3);
+        queueWithPriority1.add(10,1);
+        Example.matchTwoQueuePriority(queueWithPriority,queueWithPriority1);
+        while (!queueWithPriority.isEmpty()) {
+            System.out.println("Valor:" + queueWithPriority.getFirst() + " prioridad: " + queueWithPriority.getPriority());
+            queueWithPriority.remove();
+
+        }
+
+        /*
+        SearchBinaryTreeWithCount binaryTree = new SearchBinaryTreeWithCount(1);
+        binaryTree.add(1);
+        binaryTree.add(2);
+        binaryTree.add(3);
+        binaryTree.add(1);
+        System.out.println(binaryTree.getTotalElements());
+*/
+
+
+        /*
+        DynamicStackWithPriority dynamicStackWithPriority = new DynamicStackWithPriority();
+        dynamicStackWithPriority.add(1,3);
+        dynamicStackWithPriority.add(2,6);
+        dynamicStackWithPriority.add(3,9);
+        dynamicStackWithPriority.add(4,15);
+        System.out.println(Example.stackWithPriorityIsStraight(dynamicStackWithPriority));
+        */
+
+        /*
+        IStack stack = new DynamicStack();
+        stack.add(1);
+        stack.add(2);
+        stack.add(3);
+        stack = Example.changeValues(stack);
+        while (!stack.isEmpty()) {
+            System.out.println(stack.getTop());
+            stack.remove();
+        }*/
+        /*
+        BinaryTree binaryTree = new BinaryTreeWithReference(1);
+        binaryTree.addLeft(2);
+        binaryTree.addRight(3);
+        binaryTree.getLeft().addRight(4);
+        print2(binaryTree);
+        */
+        /*
+
     ISet setWithBuilder = new SetWithBuilder();
     setWithBuilder.add(1);
     while (!setWithBuilder.isEmpty()) {
         int value = setWithBuilder.choose();
         System.out.println(value);
         setWithBuilder.remove(value);
-    }
+    }*/
         /*
         IQueue queue = new DoubleLinkedDynamicQueue();
         queue.add(1);

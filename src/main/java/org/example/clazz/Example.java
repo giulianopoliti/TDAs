@@ -7,6 +7,80 @@ import org.example.adt.Stack;
 import java.util.*;
 
 public class Example {
+
+    private static int getLastPriority (IQueueWithPriority d1) {
+        IQueueWithPriority copy = copyIQueueWithPriority(d1);
+        while (!copy.isEmpty()) {
+            int priority = copy.getPriority();
+            copy.remove();
+            if (copy.isEmpty()) {
+                return priority;
+            }
+        } return 0;
+    }
+    public static IQueueWithPriority matchTwoQueuePriority (IQueueWithPriority d1, IQueueWithPriority d2) {
+        int priority = getLastPriority(d1);
+        while (!d2.isEmpty()) {
+            d1.add(d2.getFirst(), 2*d2.getPriority() + priority);
+            d2.remove();
+        }
+        return d1;
+    }
+
+    public static DynamicStackWithPriority matchTwoStackWPriority (DynamicStackWithPriority d1, DynamicStackWithPriority d2) {
+        int priorityOfLast = d1.getPriority();
+        while (!d1.isEmpty()) {
+            d1.add(d2.getTop(), 2*d2.getPriority() + priorityOfLast);
+            d2.remove();
+        }
+        return d1;
+    }
+
+
+
+
+    public static boolean stackWithPriorityIsStraight (DynamicStackWithPriority dynamicStackWithPriority) {
+        DynamicStackWithPriority copy = copyStackWithPriority(dynamicStackWithPriority);
+        double pendiente = copy.getPriority() / copy.getTop();
+        copy.remove();
+        while (!copy.isEmpty()) {
+            if (copy.getPriority() / copy.getTop() != pendiente) {
+                return false;
+            }
+            copy.remove();
+        }
+        return true;
+    }
+    public static DynamicStackWithPriority copyStackWithPriority (DynamicStackWithPriority dynamicStackWithPriority) {
+        DynamicStackWithPriority copy = new DynamicStackWithPriority();
+        DynamicStackWithPriority copy2 = new DynamicStackWithPriority();
+        while (!dynamicStackWithPriority.isEmpty()) {
+            copy.add(dynamicStackWithPriority.getTop(), dynamicStackWithPriority.getPriority());
+            copy2.add(dynamicStackWithPriority.getTop(), dynamicStackWithPriority.getPriority());
+            dynamicStackWithPriority.remove();
+        }
+        while (!copy2.isEmpty()) {
+            dynamicStackWithPriority.add(copy2.getTop(), copy2.getPriority());
+            copy2.remove();
+        }
+        return copy;
+    }
+    public static IStack changeValues (IStack stack) {
+        IStack copy = copy(stack);
+        IStack stack2 = new DynamicStack();
+        while (!copy.isEmpty()) {
+            stack2.add(copy.getTop());
+            copy.remove();
+        }
+        int a = stack2.getTop();
+        stack2.remove();
+        while (!stack2.isEmpty()) {
+            copy.add(stack2.getTop());
+            stack2.remove();
+        }
+        copy.add(a);
+        return copy;
+    }
     public static int calcularDesplazamiento (String string) {
         HashMap<Character, Integer> alphabeticMap = Example.generateDictionaryOfAlphabet(); // utilizamos el mapa que generamos con todos las letras
         for (char c: string.toCharArray()) {
@@ -1035,6 +1109,91 @@ public class Example {
                 findTreeByDivision(binaryTree.getRight());
             }
         return binaryTree;
+    }
+    public BinaryTree copyBinaryTree (BinaryTree binaryTree) {
+        BinaryTree copy = new DynamicBinaryTree(binaryTree.getRootValue());
+        BinaryTree copy2 = new DynamicBinaryTree(binaryTree.getRootValue());
+        if (binaryTree.getLeft() != null) {
+
+        }
+        return null;
+    }
+
+    public static boolean isSBT(BinaryTree binaryTree) {
+        return isSBT(binaryTree, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private static boolean isSBT(BinaryTree binaryTree, int min, int max) {
+        if (binaryTree == null) {
+            return true;
+        }
+
+        int rootValue = binaryTree.getRootValue();
+        if (rootValue <= min || rootValue >= max) {
+            return false;
+        }
+
+        return isSBT(binaryTree.getLeft(), min, rootValue) && isSBT(binaryTree.getRight(), rootValue, max);
+    }
+    public static int sumaNodosInternos (BinaryTree binaryTree) {
+        if (binaryTree == null) {
+            return 0;
+        }
+        int minimo = Integer.MAX_VALUE;
+        int count = 0;
+        int [] array = sumaNodosInternos(binaryTree, minimo, count);
+        return array[0] * array[1];
+    }
+    public static int[] sumaNodosInternos (BinaryTree binaryTree, int min, int count) {
+        if (binaryTree.getLeft() == null && binaryTree.getRight() == null) {
+            if (binaryTree.getRight().getRootValue() < min) {
+                min = binaryTree.getRight().getRootValue();
+            } else if (binaryTree.getLeft().getRootValue() < min) {
+                min = binaryTree.getLeft().getRootValue();
+            }
+        } else {
+            if (binaryTree.getLeft() != null) {
+                count += binaryTree.getLeft().getRootValue();
+                sumaNodosInternos(binaryTree.getLeft(), min, count);
+            }
+            if (binaryTree.getRight() != null) {
+                count += binaryTree.getRight().getRootValue();
+                sumaNodosInternos(binaryTree.getRight(), min, count);
+            }
+        }
+        int [] array = new int[2];
+        array[0] = min;
+        array[1] = count;
+        return array;
+    }
+    public static BinaryTree SBBMoreLargeController (BinaryTree binaryTree) {
+        if (binaryTree == null) {
+            throw new RuntimeException("El arbol es nulo.");
+        }else {
+            BinaryTree maxLarge = new DynamicBinaryTree(binaryTree.getRootValue());
+            BinaryTree copy = new DynamicBinaryTree(binaryTree.getRootValue());
+            int count = 1;
+            ResultSBBMoreLarge resultSBBMoreLarge = calculateSBBMoreLarge(binaryTree, count);
+            if (resultSBBMoreLarge.getCount() > count) {
+                return resultSBBMoreLarge.getBinaryTree();
+            }
+        }
+        return binaryTree;
+    }
+    private static ResultSBBMoreLarge calculateSBBMoreLarge (BinaryTree binaryTree, int count) {
+        if (binaryTree.getRootValue() < binaryTree.getLeft().getRootValue() &&
+        binaryTree.getRootValue() > binaryTree.getRight().getRootValue()) {
+            count += 2;
+            calculateSBBMoreLarge(binaryTree.getLeft(), count);
+            calculateSBBMoreLarge(binaryTree.getRight(), count);
+        } else if (binaryTree.getRootValue() < binaryTree.getLeft().getRootValue()) {
+            count++;
+            calculateSBBMoreLarge(binaryTree.getLeft(), count);
+        } else if (binaryTree.getRootValue() > binaryTree.getRight().getRootValue()) {
+            count++;
+            Example.calculateSBBMoreLarge(binaryTree.getRight(), count);
+        }
+        return new ResultSBBMoreLarge(binaryTree, count);
     }
 
     /*
