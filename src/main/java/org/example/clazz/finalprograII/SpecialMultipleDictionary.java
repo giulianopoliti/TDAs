@@ -1,9 +1,15 @@
-package org.example.adt;
+package org.example.clazz.finalprograII;
+
+import org.example.adt.DynamicSet;
+import org.example.adt.ISet;
+import org.example.adt.KeyNode;
+import org.example.adt.Node;
+import org.example.clazz.finalprograII.IMultipleDictionary;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class DynamicMultipleDictionary implements MultipleDictionary {
+public class SpecialMultipleDictionary implements IMultipleDictionary {
 
     private KeyNode first;
     private int count;
@@ -99,7 +105,26 @@ public class DynamicMultipleDictionary implements MultipleDictionary {
     }
 
     @Override
-    public List<Integer> get(int k) {
+    public int get(int key) {
+        // devuelve el primer valor
+        KeyNode current = this.first;
+        while(current != null) {
+            if(current.getKey() == key) {
+                List<Integer> list = new LinkedList<>();
+                Node node = current.getValues();
+                while(node != null) {
+                    list.add(node.getValue());
+                    node = node.getNext();
+                }
+                return list.get(0);
+            }
+            current = current.getNext();
+        }
+        throw new RuntimeException("No se encontro la clave");
+    }
+
+    @Override
+    public List<Integer> getValues(int k) {
         KeyNode current = this.first;
         while(current != null) {
             if(current.getKey() == k) {
@@ -116,6 +141,7 @@ public class DynamicMultipleDictionary implements MultipleDictionary {
         throw new RuntimeException("No se encontro la clave");
     }
 
+
     private void delete(Node node, int value) {
         Node backup = node;
         Node current = node.getNext();
@@ -131,5 +157,4 @@ public class DynamicMultipleDictionary implements MultipleDictionary {
             backup.setNext(current.getNext());
         }
     }
-
 }
